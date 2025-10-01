@@ -42,3 +42,5 @@ Updated readme file
 └─ tests/
 ├─ __init__.py
 └─ test_combat.py
+
+<img width="565" height="525" alt="flowchart" src="https://github.com/user-attachments/assets/4dcf06d2-692a-4cd9-b3bd-2a884573d27a" />
