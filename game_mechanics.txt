@@ -1,0 +1,20 @@
+The player should have choices and these are the choices they are able to do.
+    -fight
+    -talk to npc
+    -pick up items
+    -walk to a destination
+
+this is a list of things the player should be able to do when i have some time over (i honestly think i only have time for trade with npc).
+    -pickpocket
+    -trade with npc
+    -have companions
+
+these are some properties the player should have.
+    -HP = health, when this reaches zero the game ends (unless there is some form of revive)
+    -gold = currency, will only add this if there is trading in the game
+    -inventory system, a place to keep your items
+    -dialgouge options, so you can talk to the npc
+
+items included should be able to do atleast one of these things.
+    -be a weapon and do damage
+    -something that can heal
