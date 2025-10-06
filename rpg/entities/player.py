@@ -28,7 +28,7 @@ class Player:
         """ Reduce health but never below zero."""
         self.hp = max (0, self.hp - amount)
  
-    def heal (self, amount: int ) -> None:
+    def heal(self, amount: int ) -> None:
         """ Increase health by 'amount' (no max cap yet). """
         self.hp += amount
 
