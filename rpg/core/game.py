@@ -25,7 +25,9 @@ def run_game():
                 else:
                     print("You can't go there from here.\n")
         elif command == "trade" and current_room == npc_room1 or npc_room2:
-            
+            #trade():
+            pass
+
 
 # Start the game
 if __name__ == "__main__":
