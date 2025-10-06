@@ -26,7 +26,7 @@ class Location:
         return f"{self.name}: {self.description} Exits: {exits_text}"
 
     def __repr__(self) -> str:
-        # Developer-friendly view for debugging
+        
         return f"Location(name={self.name!r}, exits={self.exits!r})"
 
 
@@ -38,7 +38,7 @@ class World:
 
     def add_location(self, loc: Location) -> None:
         # Store a Location by its name
-        self.locations[loc.name] = loc
+        self.locations[loc.name] = loc   
 
     def get(self, name: str):
         # Return a Location by name, or None if not found

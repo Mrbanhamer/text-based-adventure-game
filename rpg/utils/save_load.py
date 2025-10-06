@@ -1,5 +1,5 @@
 # Simple save/load helpers for the game.
-# No new files inside your repo: we use the OS temp directory for save files.
+# No new files inside repo: we use the OS temp directory for save files.
 
 import json          # For reading/writing JSON files
 import os            # For building file paths that work on all systems
