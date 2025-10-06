@@ -9,4 +9,4 @@ class Item:
         return f"{self.name} [{self.item_type}] (value: {self.value})" #returns readable summary of the item
     
     def __repr__(self) -> str:
-        return f"Item (name= {self.name!r}, type= {self.item_type!r}, value= {self.value!r}, description= {self.description!r})"
+        return f"Item(name= {self.name!r}, type= {self.item_type!r}, value= {self.value!r}, description= {self.description!r})"
