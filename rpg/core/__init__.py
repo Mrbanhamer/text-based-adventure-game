@@ -1,0 +1,1 @@
+# Marks 'core' as a Python package. talar om att mappen är ett paket.
