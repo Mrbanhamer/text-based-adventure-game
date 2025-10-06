@@ -9,7 +9,7 @@ class Inventory: #Container that hold items
         self.items.append(item)
         print(f"> added {item.name} to inventory")
 
-    def remove_by_name(self, name: str) -> bool:
+    def remove_by_name(self, name: str) -> bool: #Remove first item with this name, returns true if removed.
         for i, it in enumerate(self.items):
             if it.name.lower() ==  name.lower():
                 del self.items[i]
