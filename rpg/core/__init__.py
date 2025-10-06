@@ -1,0 +1,1 @@
+from world import npc_room1, npc_room2
