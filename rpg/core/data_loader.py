@@ -1,5 +1,5 @@
 # Loads world data from JSON and builds a World object.
-# Minimal, beginner-friendly: only standard library (json, os).
+
 
 import json
 import os
