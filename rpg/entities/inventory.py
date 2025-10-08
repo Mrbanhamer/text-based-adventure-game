@@ -7,7 +7,7 @@ class Inventory: #Container that hold items
 
     def add(self, item: Item) -> None: #Add a item to the inventory
         self.items.append(item)
-        print(f"> added {item.name} to inventory")
+        print(f"> Added {item.name} to inventory")
 
     def remove_by_name(self, name: str) -> bool: #Remove first item with this name, returns true if removed.
         for i, it in enumerate(self.items):
@@ -15,8 +15,8 @@ class Inventory: #Container that hold items
                 del self.items[i]
                 print(f"> Removed {name} from inventory.")
                 return True
-            print(f"> No item named '{name}' found.")
-            return False
+        print(f"> No item named '{name}' found.")
+        return False
         
     def has(self, name: str) -> bool: #Checks if item exists
         return any(it.name.lower() == name.lower() for it in self.items)
@@ -42,6 +42,6 @@ class Inventory: #Container that hold items
                 print(f"- {it.name} [{it.item_type}] (value: {it.value})")
             print("-----------------\n")
     
-    def __repr__(self) -> str:
+    def __repr__(self) -> str: #Log/Felsökning
         return f"Inventory(items={self.items!r})"
     
