@@ -12,16 +12,16 @@
   "armory": {
       "text": "You turned left and have now entered the armory and found a merchant. He offers you weapons: a sword, a bow or... you notice a shield that you could steal.", 
       "choices": [
-          {"text": "Buy the sword", "next": "sword"},
-          {"text": "Buy the bow", "next": "bow"},
-          {"text": "Steal the shield", "next": "steal_attempt"},
-          {"text": "Leave the shop", "next": "lab"}
+        {"text": "Buy the sword (3 gold)", "next": "sword", "cost": 3, "add_item": "Sword"},
+        {"text": "Buy the bow (4 gold)", "next": "bow", "cost": 4, "add_item": "Bow"},
+        {"text": "Steal the shield", "next": "steal_attempt"},
+        {"text": "Leave the shop", "next": "lab"}
     ]      
   },
   "steal_attempt": {
     "text": "You quietly reach for the merchant's shield, heart pounding... (50% chance of success)",
     "choices": [
-      { "text": "Continue", "next": "steal_result" }
+      { "text": "Continue", "next": "steal_result"}
     ]
   },
   "steal_result": {
@@ -30,19 +30,22 @@
   },
   "steal_success": {
     "text": "Your fingers are quick and silent! You slip the shield free without being noticed.",
+    "add_item": "Shield",
     "choices": [
       {"text": "Buy something else", "next": "armory"},
-      { "text": "Leave the shop", "next": "lab" }
+      {"text": "Leave the shop", "next": "lab"}
     ]
   },
   "steal_fail": {
     "text": "The merchant catches your hand! He shouts angrily and throws you out. You lose 2 HP.",
+    "hp_change": -2,
     "choices": [
-      { "text": "Get up and leave", "next": "lab" }
+      {"text": "Get up and leave", "next": "lab"}
     ]
   },
   "sword": {
     "text": "You buy the sword. You feel stronger with steel in your hand.",
+    "add_item": "Sword",
     "choices": [
       {"text": "Buy something else", "next": "armory"},
       {"text": "Leave the shop", "next": "lab"}
@@ -51,6 +54,7 @@
   },
   "bow": {
     "text": "You buy the bow. A good weapon for keeping danger at a distance.",
+    "add_item": "Bow",
     "choices": [
       {"text": "Buy something else", "next": "armory"}, 
       {"text": "Leave the shop", "next": "lab"}
@@ -59,7 +63,7 @@
   "lab": {
       "text": "You have entered the Wizard's Labratory and no one else is around. On the lab desk you see health poition in a glowing bottle.",
       "choices": [ 
-          {"text": "Collect the potion and move forward", "next": "prisoner"}
+          {"text": "Collect the potion and move forward", "next": "prisoner" , "add_item": "Health Potion"}
     ]
   },
   "prisoner": {
@@ -72,7 +76,7 @@
   "armory2": {
     "text": "Because you saved his life the prisoner gave you the key to the second armory where you will find a body armor and an axe",
     "choices": [
-      {"text": "Equip yourself and move on", "next": "battle"}
+      {"text": "Equip yourself and move on", "next": "battle", "add_items": ["Axe", "Armor"]}
     ] 
   },
   "battle": {
@@ -100,6 +104,7 @@
   }, 
   "battle_victory": {
     "text": "The skeleton collapses into a pile of bones! Among the remains, you find a shimmering Invisibility Cloak. You carefully put it on.",
+    "add_item": "Invisibility Cloak",
     "choices": [
       {"text": "Continue down the corridor", "next": "dragon"}
     ]
