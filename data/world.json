@@ -14,12 +14,35 @@
       "choices": [
           {"text": "Buy the sword", "next": "sword"},
           {"text": "Buy the bow", "next": "bow"},
-          {"text": "Steal the shield", "next": "shield"}
+          {"text": "Steal the shield", "next": "steal_attempt"}
     ]      
+  },
+  "steal_attempt": {
+    "text": "You quietly reach for the merchant's shield, heart pounding... (50% chance of success)",
+    "choices": [
+      { "text": "Continue", "next": "steal_result" }
+    ]
+  },
+  "steal_result": {
+    "text": "This node is handled by the game logic — Python will decide if you succeed or fail.",
+    "choices": []
+  },
+  "steal_success": {
+    "text": "Your fingers are quick and silent! You slip the shield free without being noticed.",
+    "choices": [
+      { "text": "Leave the shop", "next": "lab" }
+    ]
+  },
+  "steal_fail": {
+    "text": "The merchant catches your hand! He shouts angrily and throws you out. You lose 2 HP.",
+    "choices": [
+      { "text": "Get up and leave", "next": "lab" }
+    ]
   },
   "sword": {
     "text": "You buy the sword. You feel stronger with steel in your hand.",
     "choices": [
+      {"text": "Buy something else", "next": "armory"},
       {"text": "Leave the shop", "next": "lab"}
     ]
 
@@ -27,6 +50,7 @@
   "bow": {
     "text": "You buy the bow. A good weapon for keeping danger at a distance.",
     "choices": [
+      {"text": "Buy something else", "next": "armory"}, 
       {"text": "Leave the shop", "next": "lab"}
     ]
   },
