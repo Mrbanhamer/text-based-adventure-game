@@ -1,41 +1,32 @@
-import random  # for simple damage rolls
-
+import random
 
 class Enemy:
-    """A very small enemy object."""
-
+    
     def __init__(self, name, hp, dmg_min, dmg_max):
-        
-        self.name = name        # enemy name 
-        self.hp = hp            # hit points (health)
-        self.dmg_min = dmg_min  # lowest damage per hit
-        self.dmg_max = dmg_max  # highest damage per hit
+        self.name = name
+        self.hp = hp
+        self.dmg_min = dmg_min
+        self.dmg_max = dmg_max
+        self._first_hit_done = False  # True after the enemy has been hit once
 
     def is_alive(self):
-        # Returns True if the enemy has more than 0 HP
         return self.hp > 0
 
     def take_damage(self, amount):
-        # Decrease HP by 'amount', but never below 0
         if amount < 0:
             amount = 0
+        # If this is the first hit and it would kill us, leave 1 HP instead
+        if not self._first_hit_done and amount >= self.hp:
+            self.hp = 1
+            self._first_hit_done = True
+            return
         self.hp = max(0, self.hp - amount)
+        self._first_hit_done = True
 
     def attack(self):
-        # Return a random damage value between dmg_min and dmg_max
         return random.randint(self.dmg_min, self.dmg_max)
 
     def info(self):
-        # A simple text about this enemy
         return f"{self.name} (HP: {self.hp}, dmg: {self.dmg_min}-{self.dmg_max})"
-
-
-# Ready-made enemies for our story (use these helpers to create them)
-def create_skeleton():
-    # Weak enemy for early game
-    return Enemy("Skeleton", 6, 1, 3)
-
-
-def create_dragon():
-    # Strong final boss
-    return Enemy("Dragon", 30, 4, 8)
+    
+    

@@ -1,59 +1,100 @@
-# Loads world data from JSON and builds a World object.
-
-
 import json
-import os
+import random
 
-from .world import World, Location  # Use our simple world classes
+# -----------------------------
+# Läsa JSON-filen
+# -----------------------------
+with open("world.json", "r") as file:
+    world = json.load(file)
 
+# -----------------------------
+# Spelarstatus
+# -----------------------------
+inventory = []
+gold = 5
+hp = 10
+current_node = "start"
 
-def get_default_world_path() -> str:
-    """
-    Return the absolute path to data/world.json
-    (works no matter where you run the program from).
-    """
-    # __file__ is rpg/core/data_loader.py -> go up two folders to project root
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    return os.path.join(project_root, "data", "world.json")
+# -----------------------------
+# Huvudloop för spelet
+# -----------------------------
+while True:
+    node = world[current_node]
 
+    # Visa nodens text
+    print("\n" + node["text"] + "\n")
 
-def load_world(json_path: str) -> World:
-    """
-    Read a JSON file and build a World with Location objects.
-    Expected JSON structure:
+    # Slumpmässiga händelser
+    if current_node == "steal_result":
+        if random.random() < 0.5:
+            current_node = "steal_success"
+        else:
+            current_node = "steal_fail"
+        continue
 
-    {
-      "locations": [
-        {
-          "name": "Corridor",
-          "description": "A dark, cold stone corridor.",
-          "exits": { "left": "Armory", "right": "Wizard Lab" }
-        },
-        { "name": "Armory", "description": "Dusty racks and a locked chest." },
-        { "name": "Wizard Lab", "description": "Bottles and strange notes." }
-      ]
-    }
-    """
-    # 1) Read JSON
-    with open(json_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    if current_node == "battle_result":
+        if "Armor" in inventory and "Axe" in inventory:
+            current_node = "battle_victory"
+        elif "Sword" in inventory and random.random() < 1/3:
+            current_node = "battle_victory"
+        elif "Bow" in inventory and random.random() < 0.5:
+            current_node = "battle_victory"
+        else:
+            current_node = "skeleton_defeat"
+        continue
 
-    # 2) Create an empty world
-    world = World()
+    if current_node == "dragon_result":
+        if all(item in inventory for item in ["Armor", "Axe", "Shield"]):
+            current_node = "dragon_victory"
+        else:
+            current_node = "dragon_defeat"
+        continue
 
-    # 3) First pass: create all locations (without exits)
-    for loc_data in data.get("locations", []):
-        name = loc_data["name"]                       # required field
-        description = loc_data.get("description", "") # optional field
-        world.add_location(Location(name, description))
+    # Visa val
+    choices = node.get("choices", [])
+    if not choices:
+        print("\nGAME OVER")
+        print(f"HP: {hp}, Gold: {gold}, Inventory: {inventory}")
+        break
 
-    # 4) Second pass: connect exits (now that all locations exist)
-    for loc_data in data.get("locations", []):
-        name = loc_data["name"]
-        exits = loc_data.get("exits", {})             # optional dict: direction -> target name
-        for direction, target_name in exits.items():
-            # Only connect if both ends exist
-            if world.get(name) and world.get(target_name):
-                world.connect(name, direction, target_name)
+    for i, choice in enumerate(choices):
+        print(f"{i+1}. {choice['text']}")
 
-    return world
+    # Få spelarens val
+    try:
+        selection = int(input("\nChoose an option: ")) - 1
+        if selection < 0 or selection >= len(choices):
+            print("Invalid choice. Try again.")
+            continue
+    except ValueError:
+        print("Please enter a number.")
+        continue
+
+    choice_data = choices[selection]
+
+    # Hantera guld
+    if "cost" in choice_data:
+        if gold >= choice_data["cost"]:
+            gold -= choice_data["cost"]
+            print(f"You paid {choice_data['cost']} gold.")
+        else:
+            print("Not enough gold!")
+            continue
+
+    # Lägg till item
+    if "add_item" in choice_data:
+        inventory.append(choice_data["add_item"])
+        print(f"You obtained: {choice_data['add_item']}")
+
+    if "add_items" in choice_data:
+        for item in choice_data["add_items"]:
+            inventory.append(item)
+            print(f"You obtained: {item}")
+
+    # Ändra HP
+    if "hp_change" in node:
+        hp += node["hp_change"]
+        print(f"Your HP changed by {node['hp_change']}")
+
+    # Gå till nästa nod
+    current_node = choice_data["next"]
