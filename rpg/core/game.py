@@ -1,11 +1,14 @@
-# main.py
-from world import starting, enemy_room, boss_room, npc_room1, npc_room2, Lab_room, prisoner_room
+import json
+from .world import starting, enemy_room, boss_room, npc_room1, npc_room2, Lab_room, prisoner_room
 
 def run_game():
     global current_room
     current_room = starting
     while True:
-        command = print("decide action ")
+        if current_room == npc_room1 or npc_room2:
+            print("type <trade> to trade")
+        print("type <move> to move to a different room")
+        command = input("decide action: ")
         if command == "move":
             while True:
                 print(f"\nYou are in the {current_room.name}.")
@@ -22,6 +25,7 @@ def run_game():
                 if found_room:
                     current_room = found_room
                     print(f"You move to the {current_room.name}.\n")
+                    break
                 else:
                     print("You can't go there from here.\n")
         elif command == "trade" and current_room == npc_room1 or npc_room2:
