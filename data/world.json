@@ -6,7 +6,7 @@
     "text": "You wake up on a cold stone floor in a dark corridor. You find 5 gold coins in your pocket. Ahead, the corridor splits.",
     "choices": [
       {"text": "Go left", "next": "armory"},
-      {"text": "Go right", "next": "right_path"}
+      {"text": "Go right", "next": "lab"}
     ]
   },
   "armory": {
@@ -14,7 +14,8 @@
       "choices": [
           {"text": "Buy the sword", "next": "sword"},
           {"text": "Buy the bow", "next": "bow"},
-          {"text": "Steal the shield", "next": "steal_attempt"}
+          {"text": "Steal the shield", "next": "steal_attempt"},
+          {"text": "Leave the shop", "next": "lab"}
     ]      
   },
   "steal_attempt": {
@@ -30,6 +31,7 @@
   "steal_success": {
     "text": "Your fingers are quick and silent! You slip the shield free without being noticed.",
     "choices": [
+      {"text": "Buy something else", "next": "armory"},
       { "text": "Leave the shop", "next": "lab" }
     ]
   },
@@ -55,7 +57,7 @@
     ]
   },
   "lab": {
-      "text": "You have entered the Wizards Labratory and no one else is around. On the lab desk you see healt poition in a glowing bottle.",
+      "text": "You have entered the Wizard's Labratory and no one else is around. On the lab desk you see health poition in a glowing bottle.",
       "choices": [ 
           {"text": "Collect the potion and move forward", "next": "prisoner"}
     ]
@@ -109,8 +111,8 @@
     ]
   },
   "dragon": {
-    "text": "You walk further in the tunnel. A dragon looms before you, scales glimmering like molten gold. The dragon spreads its wings and roars so loud that the whole tunnel i shaking.",
-    "choice": [
+    "text": "You walk further in the tunnel. A dragon looms before you, scales glimmering like molten gold. The dragon spreads its wings and roars so loud that the whole tunnel start shaking.",
+    "choices": [
       {"text": "Fight the dragon", "next": "dragon_battle"}
     ]
   },
