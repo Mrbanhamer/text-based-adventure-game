@@ -1,1 +1,1 @@
-# Marks 'core' as a Python package. talar om att mappen är ett paket.
+from .world import npc_room1, npc_room2
