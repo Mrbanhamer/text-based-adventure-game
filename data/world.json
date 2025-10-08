@@ -12,8 +12,8 @@
   "armory": {
       "text": "You turned left and have now entered the armory and found a merchant. He offers you weapons: a sword, a bow or... you notice a shield that you could steal.", 
       "choices": [
-        {"text": "Buy the sword (3 gold)", "next": "sword", "cost": 3, "add_item": "Sword"},
-        {"text": "Buy the bow (4 gold)", "next": "bow", "cost": 4, "add_item": "Bow"},
+        {"text": "Buy the sword (2 gold)", "next": "sword", "cost": 2, "add_item": "Sword"},
+        {"text": "Buy the bow (3 gold)", "next": "bow", "cost": 3, "add_item": "Bow"},
         {"text": "Steal the shield", "next": "steal_attempt"},
         {"text": "Leave the shop", "next": "lab"}
     ]      
