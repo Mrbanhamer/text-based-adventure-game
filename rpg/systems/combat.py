@@ -1,89 +1,72 @@
-from rpg.entities import Enemy  # type hints only (we also accept any object with .hp/.attack/.take_damage)
-# We will compute damage using only player.items (a list of strings)
+
+from rpg.entities import create_skeleton, create_dragon  # enemy factories
+from colorama import init, Fore
+init(autoreset=True)
 
 
-def _player_damage(player) -> int:
+def _player_damage(bag: list[str]) -> int:
     """
-    Compute a very simple player damage number based on items (strings) in player.items.
-
-    Rules (easy to tweak):
-      - Base damage = 2
-      - +1 if player has "Sword"
-      - +1 if player has "Bow"
-      - +2 if player has "Battle Axe"
-      - +1 if player has "Dagger"
-
-    We do NOT stack weapon types realistically; we just add bonuses if the string is present.
-    This keeps it simple for beginners.
+    Compute a tiny player damage number from picked items (strings).
+    Rules:
+      base = 2
+      +1 if "Sword"
+      +1 if "Bow"
+      +2 if "Battle Axe"
+      +1 if "Dagger"
     """
     base = 2
-    items = set(player.items)  # set for quick "in" checks
-
-    if "Sword" in items:
+    s = {n.lower() for n in bag}
+    if "sword" in s:
         base += 1
-    if "Bow" in items:
+    if "bow" in s:
         base += 1
-    if "Battle Axe" in items:
+    if "battle axe" in s:
         base += 2
-    if "Dagger" in items:
+    if "dagger" in s:
         base += 1
-
-    # never return less than 1 damage
     return max(1, base)
 
 
-def _enemy_damage(enemy: Enemy, player) -> int:
+def _enemy_for_room(room_name: str):
+    """Return an enemy object based on the room name."""
+    name = room_name.lower()
+    if name == "cemetery":
+        return create_skeleton()
+    if name == "dragon's lair":
+        return create_dragon()
+    return None
+
+
+def start_combat_in_room(room_name: str, bag: list[str], player_hp: int = 10) -> str:
     """
-    Enemy rolls damage using enemy.attack().
-    We then reduce incoming damage if the player has defensive items:
-
-      - "Shield" reduces damage by 1
-      - "Armor"  reduces damage by 1
-
-    Damage never goes below 0.
+    Very small loop:
+      - player hits first using _player_damage(bag)
+      - enemy hits using enemy.attack()
+    Returns "win" or "lose".
     """
-    dmg = enemy.attack()
-    items = set(player.items)
+    enemy = _enemy_for_room(room_name)
+    if enemy is None:
+        print("(combat) No enemy in this room.")
+        return "none"
 
-    if "Shield" in items:
-        dmg -= 1
-    if "Armor" in items:
-        dmg -= 1
+    print(f"A {enemy.name} appears! {enemy.info()}")
 
-    return max(0, dmg)
-
-
-def start_combat(player, enemy: Enemy) -> str:
-    """
-    Run a tiny turn-based combat:
-      1) Player hits first
-      2) If enemy still alive, enemy hits
-      3) Repeat until someone reaches 0 HP
-
-    Prints simple log lines and returns:
-      - "win"  if enemy dies
-      - "lose" if player dies
-    """
-    print(f"A {enemy.name} appears! ({enemy.info()})", flush=True)
+    # Simple player state (just HP number for now)
+    php = player_hp
 
     while True:
-        # --- Player's turn ---
-        pdmg = _player_damage(player)
+        # Player turn
+        pdmg = _player_damage(bag)
         enemy.take_damage(pdmg)
-        print(f"You hit the {enemy.name} for {pdmg}. {enemy.name} HP = {enemy.hp}", flush=True)
-
+        print(f"You hit the {enemy.name} for {pdmg}. {enemy.name} HP = {enemy.hp}")
         if not enemy.is_alive():
-            print(f"You defeated the {enemy.name}!", flush=True)
+            print(Fore.GREEN +f"You defeated the {enemy.name}!")
             return "win"
 
-        # --- Enemy's turn ---
-        edmg = _enemy_damage(enemy, player)
-        if edmg > 0:
-            player.take_damage(edmg)
-            print(f"The {enemy.name} hits you for {edmg}. Your HP = {player.hp}", flush=True)
-        else:
-            print(f"The {enemy.name} fails to hurt you.", flush=True)
-
-        if not player.is_alive():
-            print("You died. Game over.", flush=True)
-            return "lose
+        # Enemy turn
+        edmg = enemy.attack()
+        php = max(0, php - edmg)
+        print(f"The {enemy.name} hits you for {edmg}. Your HP = {php}")
+        if php <= 0:
+            print(Fore.RED +"You died. Game over.")
+            return "lose"

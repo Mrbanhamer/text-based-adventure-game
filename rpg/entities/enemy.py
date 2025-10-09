@@ -1,21 +1,25 @@
-import random
+import random  # used for enemy.attack() damage rolls
+
 
 class Enemy:
-    
-    def __init__(self, name, hp, dmg_min, dmg_max):
-        self.name = name
-        self.hp = hp
-        self.dmg_min = dmg_min
-        self.dmg_max = dmg_max
-        self._first_hit_done = False  # True after the enemy has been hit once
+    """A very small enemy object with HP and a simple damage range."""
 
-    def is_alive(self):
+    def __init__(self, name: str, hp: int, dmg_min: int, dmg_max: int):
+        self.name = name          # enemy display name
+        self.hp = hp              # hit points (health)
+        self.dmg_min = dmg_min    # minimum damage per hit
+        self.dmg_max = dmg_max    # maximum damage per hit
+        self._first_hit_done = False  # prevents dying on the very first hit
+
+    def is_alive(self) -> bool:
+        # Returns True if the enemy has more than 0 HP
         return self.hp > 0
 
-    def take_damage(self, amount):
+    def take_damage(self, amount: int) -> None:
+        # Decrease HP by 'amount', but never below 0
         if amount < 0:
             amount = 0
-        # If this is the first hit and it would kill us, leave 1 HP instead
+        # First-hit protection: if first hit would kill, leave 1 HP instead
         if not self._first_hit_done and amount >= self.hp:
             self.hp = 1
             self._first_hit_done = True
@@ -23,10 +27,22 @@ class Enemy:
         self.hp = max(0, self.hp - amount)
         self._first_hit_done = True
 
-    def attack(self):
+    def attack(self) -> int:
+        # Return a random damage value between dmg_min and dmg_max (inclusive)
         return random.randint(self.dmg_min, self.dmg_max)
 
-    def info(self):
+    def info(self) -> str:
+        # Simple text about this enemy (used in logs/prints)
         return f"{self.name} (HP: {self.hp}, dmg: {self.dmg_min}-{self.dmg_max})"
-    
-    
+
+
+# ----- ready-made enemies for our story (simple helpers) ----------------------
+
+def create_skeleton() -> Enemy:
+    # Weak enemy for early game; enough HP to avoid easy one-shots
+    return Enemy("Skeleton", hp=10, dmg_min=1, dmg_max=3)
+
+
+def create_dragon() -> Enemy:
+    # Strong final boss
+    return Enemy("Dragon", hp=40, dmg_min=4, dmg_max=8)

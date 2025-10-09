@@ -1,145 +1,39 @@
- 
-
-
 {
-  "start": {
-    "text": "You wake up on a cold stone floor in a dark corridor. You find 5 gold coins in your pocket. Ahead, the corridor splits.",
-    "choices": [
-      {"text": "Go left", "next": "armory"},
-      {"text": "Go right", "next": "right_path"}
-    ]
-  },
-  "armory": {
-      "text": "You turned left and have now entered the armory and found a merchant. He offers you weapons: a sword, a bow or... you notice a shield that you could steal.", 
-      "choices": [
-          {"text": "Buy the sword", "next": "sword"},
-          {"text": "Buy the bow", "next": "bow"},
-          {"text": "Steal the shield", "next": "steal_attempt"}
-    ]      
-  },
-  "steal_attempt": {
-    "text": "You quietly reach for the merchant's shield, heart pounding... (50% chance of success)",
-    "choices": [
-      { "text": "Continue", "next": "steal_result" }
-    ]
-  },
-  "steal_result": {
-    "text": "This node is handled by the game logic — Python will decide if you succeed or fail.",
-    "choices": []
-  },
-  "steal_success": {
-    "text": "Your fingers are quick and silent! You slip the shield free without being noticed.",
-    "choices": [
-      { "text": "Leave the shop", "next": "lab" }
-    ]
-  },
-  "steal_fail": {
-    "text": "The merchant catches your hand! He shouts angrily and throws you out. You lose 2 HP.",
-    "choices": [
-      { "text": "Get up and leave", "next": "lab" }
-    ]
-  },
-  "sword": {
-    "text": "You buy the sword. You feel stronger with steel in your hand.",
-    "choices": [
-      {"text": "Buy something else", "next": "armory"},
-      {"text": "Leave the shop", "next": "lab"}
-    ]
-
-  },
-  "bow": {
-    "text": "You buy the bow. A good weapon for keeping danger at a distance.",
-    "choices": [
-      {"text": "Buy something else", "next": "armory"}, 
-      {"text": "Leave the shop", "next": "lab"}
-    ]
-  },
-  "lab": {
-      "text": "You have entered the Wizards Labratory and no one else is around. On the lab desk you see healt poition in a glowing bottle.",
-      "choices": [ 
-          {"text": "Collect the potion and move forward", "next": "prisoner"}
-    ]
-  },
-  "prisoner": {
-    "text": "Further along in the corridor you encounter a wounded prisoner, barely clinging to life and half of his body is burned.",
-    "choices": [
-      {"text": "Give him the healt potion", "next": "armory2"},
-      {"text": "Leave the prisoner to die and continue", "next": "battle"}
-    ]
-  },
-  "armory2": {
-    "text": "Because you saved his life the prisoner gave you the key to the second armory where you will find a body armor and an axe",
-    "choices": [
-      {"text": "Equip yourself and move on", "next": "battle"}
-    ] 
-  },
-  "battle": {
-    "text": "A rattling skeleton blocks your path! Its eyes glow with eerie light. You ready yourself for combat.",
-    "choices": [
-      {"text": "Fight the skeleton", "next": "battle_skeleton"},
-      {"text": "Try to run away", "next": "run_away"}
-    ]
-  },
-  "battle_skeleton": {
-    "text": "Skeleton Encounter (combat). Outcome depends on your gear:\n- With Sword → 1/3 chance to win.\n- With Bow → 1/2 chance to win.\n- With Armor + Axe → guaranteed win.\n- With No weapon → instant death.",
-    "choices": [
-      {"text": "Continue", "next": "battle_result"}
-    ]  
-  }, 
-  "battle_result": {
-    "text": "This node is handled by the game logic — Python will decide the outcome (win, lose, or death).",
-    "choices": []
-  },
-  "skeleton_defeat": {
-    "text": "The skeleton strikes you down. Darkness takes you...",
-    "choices": [
-      {"text": "Exit"}
-    ]
-  }, 
-  "battle_victory": {
-    "text": "The skeleton collapses into a pile of bones! Among the remains, you find a shimmering Invisibility Cloak. You carefully put it on.",
-    "choices": [
-      {"text": "Continue down the corridor", "next": "dragon"}
-    ]
-  }, 
-  "run_away": {
-    "text": "You turn and flee down the corridor, the skeleton's bony footsteps echoing behind. You got away but now you find yourself in front of a massive dark tunnel.",
-    "choices": [
-      {"text": "Enter the tunnel", "next": "dragon"}
-    ]
-  },
-  "dragon": {
-    "text": "You walk further in the tunnel. A dragon looms before you, scales glimmering like molten gold. The dragon spreads its wings and roars so loud that the whole tunnel i shaking.",
-    "choice": [
-      {"text": "Fight the dragon", "next": "dragon_battle"}
-    ]
-  },
-  "dragon_battle": {
-    "text": "The Dragon's Lair (final combat)\n\nWin only if you have Armor + Axe + Shield.\nInvisibility Cloak does not fool the dragon.\nOtherwise: you die.",
-    "choices": [
-      {"text": "Face your fate", "next": "dragon_result"}
-    ]
-  },
-  "dragon_result": {
-    "text": "This node is handled by the game logic — Python will decide whether you win or die.",
-    "choices": []
-  },
-  "dragon_victory": {
-    "text": "With a mighty strike, your axe pierces the dragons heart! It collapses with a deafening roar. Flames die out, and you stumble into the moonlight — victorious at last.",
-    "choices": []
-  },
-  "dragon_defeat": {
-    "text": "The dragon's flames engulf you. Your scream fades into the roar of fire. Your soul joins the countless fallen before you.",
-    "choices": []
-  
-  }
-
-
-
- 
-
-
-
-
-
+  "locations": [
+    {
+      "name": "Corridor",
+      "description": "A dark stone corridor where you wake up.",
+      "exits": ["Laboratory", "Big armory", "Prison"]
+    },
+    {
+      "name": "Cemetery",
+      "description": "Old graves and cold air. Something rattles in the dark.",
+      "exits": ["Dragon's Lair", "Prison"]
+    },
+    {
+      "name": "Dragon's Lair",
+      "description": "Heat and ash; an ancient dragon waits among bones.",
+      "exits": ["Cemetery"]
+    },
+    {
+      "name": "Big armory",
+      "description": "Dusty racks and a merchant. Stronger gear might be here.",
+      "exits": ["Corridor", "Prison"]
+    },
+    {
+      "name": "Small armory",
+      "description": "A small weapons room. Quieter, but still useful.",
+      "exits": ["Prison"]
+    },
+    {
+      "name": "Prison",
+      "description": "Rusty bars and a wounded prisoner whispering for help.",
+      "exits": ["Corridor", "Big armory", "Laboratory", "Small armory", "Cemetery"]
+    },
+    {
+      "name": "Laboratory",
+      "description": "The wizard's lab; bottles and strange notes cover the desk.",
+      "exits": ["Corridor", "Big armory", "Prison"]
+    }
+  ]
 }

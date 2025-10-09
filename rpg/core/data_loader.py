@@ -1,100 +1,117 @@
-import json
-import random
 
-# -----------------------------
-# Läsa JSON-filen
-# -----------------------------
-with open("world.json", "r") as file:
-    world = json.load(file)
+import json      # read/write JSON files
+import os        # build paths that work on all systems
 
-# -----------------------------
-# Spelarstatus
-# -----------------------------
-inventory = []
-gold = 5
-hp = 10
-current_node = "start"
 
-# -----------------------------
-# Huvudloop för spelet
-# -----------------------------
-while True:
-    node = world[current_node]
+def _project_root() -> str:
+    """Return absolute path to the project root (two levels up from this file)."""
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-    # Visa nodens text
-    print("\n" + node["text"] + "\n")
 
-    # Slumpmässiga händelser
-    if current_node == "steal_result":
-        if random.random() < 0.5:
-            current_node = "steal_success"
-        else:
-            current_node = "steal_fail"
-        continue
+def get_default_world_path(filename: str = "world.json") -> str:
+    """Absolute path to data/world.json."""
+    return os.path.join(_project_root(), "data", filename)
 
-    if current_node == "battle_result":
-        if "Armor" in inventory and "Axe" in inventory:
-            current_node = "battle_victory"
-        elif "Sword" in inventory and random.random() < 1/3:
-            current_node = "battle_victory"
-        elif "Bow" in inventory and random.random() < 0.5:
-            current_node = "battle_victory"
-        else:
-            current_node = "skeleton_defeat"
-        continue
 
-    if current_node == "dragon_result":
-        if all(item in inventory for item in ["Armor", "Axe", "Shield"]):
-            current_node = "dragon_victory"
-        else:
-            current_node = "dragon_defeat"
-        continue
+def get_default_items_path(filename: str = "items.json") -> str:
+    """Absolute path to data/items.json."""
+    return os.path.join(_project_root(), "data", filename)
 
-    # Visa val
-    choices = node.get("choices", [])
-    if not choices:
-        print("\nGAME OVER")
-        print(f"HP: {hp}, Gold: {gold}, Inventory: {inventory}")
-        break
 
-    for i, choice in enumerate(choices):
-        print(f"{i+1}. {choice['text']}")
+#  WORLD 
+def load_world_json(path: str | None = None) -> dict:
+    """
+    Read and return the JSON dict from data/world.json.
 
-    # Få spelarens val
+    Returns an empty dict {} if file is missing or invalid.
+    """
+    world_path = path or get_default_world_path()
     try:
-        selection = int(input("\nChoose an option: ")) - 1
-        if selection < 0 or selection >= len(choices):
-            print("Invalid choice. Try again.")
+        with open(world_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def world_locations_map(world_data: dict) -> dict[str, dict]:
+    """
+    Convert raw world JSON to a simple lookup:
+      { "RoomName": {"description": str, "exits": [names]} }
+    If world_data is empty, return {}.
+    """
+    out: dict[str, dict] = {}
+    for loc in world_data.get("locations", []):
+        name = loc.get("name")
+        if not name:
             continue
-    except ValueError:
-        print("Please enter a number.")
-        continue
+        out[name] = {
+            "description": loc.get("description", ""),
+            "exits": list(loc.get("exits", [])),
+        }
+    return out
 
-    choice_data = choices[selection]
 
-    # Hantera guld
-    if "cost" in choice_data:
-        if gold >= choice_data["cost"]:
-            gold -= choice_data["cost"]
-            print(f"You paid {choice_data['cost']} gold.")
-        else:
-            print("Not enough gold!")
-            continue
+#  ITEMS 
+def load_items_json(path: str | None = None) -> dict:
+    """
+    Read and return the JSON dict from data/items.json.
 
-    # Lägg till item
-    if "add_item" in choice_data:
-        inventory.append(choice_data["add_item"])
-        print(f"You obtained: {choice_data['add_item']}")
+    Structure:
+      {
+        "items": [ {name, kind, value, description}, ... ],
+        "rooms": { "RoomName": ["ItemName", ...], ... }
+      }
 
-    if "add_items" in choice_data:
-        for item in choice_data["add_items"]:
-            inventory.append(item)
-            print(f"You obtained: {item}")
+    Returns {} if file is missing or invalid.
+    """
+    items_path = path or get_default_items_path()
+    try:
+        with open(items_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
 
-    # Ändra HP
-    if "hp_change" in node:
-        hp += node["hp_change"]
-        print(f"Your HP changed by {node['hp_change']}")
 
-    # Gå till nästa nod
-    current_node = choice_data["next"]
+def room_items_map(items_data: dict) -> dict[str, list[str]]:
+    """
+    From items JSON, return room->list-of-item-names mapping.
+    Example: { "Laboratory": ["Health Potion"], "Big armory": ["Sword", "Shield"] }
+    """
+    return dict(items_data.get("rooms", {}))
+
+
+def defined_items(items_data: dict) -> dict[str, dict]:
+    """
+    From items JSON, return itemName -> itemDefinition mapping.
+    Example: { "Sword": {"name":"Sword", "kind":"weapon", ...}, ... }
+    """
+    out: dict[str, dict] = {}
+    for item in items_data.get("items", []):
+        name = item.get("name")
+        if name:
+            out[name] = item
+    return out
+
+
+# SAVE BACK 
+def save_items_json(items_data: dict, path: str | None = None) -> None:
+    """
+    Overwrite data/items.json with the given dict.
+    Use after you modify items_data["rooms"] (e.g., remove a picked item).
+    """
+    items_path = path or get_default_items_path()
+    with open(items_path, "w", encoding="utf-8") as f:
+        json.dump(items_data, f, indent=2, ensure_ascii=False)
+
+
+def pop_item_from_room(room_name: str, item_name: str, items_data: dict) -> bool:
+    """
+    Remove one item by name from items_data["rooms"][room_name], if present.
+    Return True if removed, False if not found.
+    """
+    rooms = items_data.setdefault("rooms", {})
+    items = rooms.get(room_name, [])
+    if item_name in items:
+        items.remove(item_name)
+        return True
+    return False
