@@ -36,7 +36,7 @@ class Enemy:
         return f"{self.name} (HP: {self.hp}, dmg: {self.dmg_min}-{self.dmg_max})"
 
 
-# ----- ready-made enemies for our story (simple helpers) ----------------------
+#  enemies for our story 
 
 def create_skeleton() -> Enemy:
     # Weak enemy for early game; enough HP to avoid easy one-shots

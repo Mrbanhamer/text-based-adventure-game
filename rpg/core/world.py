@@ -1,6 +1,6 @@
 
 class Room:
-    """A very small room node with a name and one-way connections to other rooms."""
+    """connections to other rooms."""
 
     def __init__(self, name: str):
         self.name = name              # visible room name (e.g., "Corridor")

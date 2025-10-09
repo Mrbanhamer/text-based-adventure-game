@@ -49,7 +49,7 @@
       "description": "Skip one fight. Does not fool the dragon."
     }
   ],
- "rooms": {
+  "rooms": {
   "Big armory": ["Sword", "Shield"],
   "Small armory": ["Bow"],
   "Laboratory": ["Health Potion"]

@@ -1,7 +1,7 @@
 from .items import Item  # Base item class (has: name, kind, value, description)
 
 class Inventory:
-    """Very small inventory that stores Item objects."""
+    """ stores Item objects."""
 
     def __init__(self) -> None:
         self.items: list[Item] = []  # internal storage (simple Python list)
@@ -27,7 +27,7 @@ class Inventory:
         return False
 
     def has(self, name: str) -> bool:
-        """Return True if any item with this name exists (case-insensitive)."""
+        """Return True if any item with this name exists ."""
         target = name.lower()
         return any(it.name.lower() == target for it in self.items)
 
@@ -49,7 +49,7 @@ class Inventory:
 
     def show(self) -> None:
         """
-        Print all items in a simple list.
+        Print all items in a list.
         Uses Item.kind and Item.value to keep it consistent with your Item class.
         """
         if not self.items:

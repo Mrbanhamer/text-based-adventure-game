@@ -97,7 +97,7 @@ def run_game() -> None:
                 else:
                     start_combat_in_room(current_room.name, bag, player_hp=10)
 
-        # --- Pick up item (only in pickup rooms) 
+        #  Pick up item (only in pickup rooms) 
         elif command == "pickup" and current_room in PICKUP_ROOMS:
             room_name = current_room.name
             items_here = room_to_items.get(room_name, [])
@@ -121,7 +121,7 @@ def run_game() -> None:
 
         # --- Exit the loop 
         elif command in ("quit", "exit", "q"):
-            print("Goodbye!")
+            print(Fore.MAGENTA +"Goodbye!")
             break
 
         # --- Unknown command 
