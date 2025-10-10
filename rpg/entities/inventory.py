@@ -1,4 +1,4 @@
-from .items import Item  # Base item class (has: name, kind, value, description)
+from .items import Item  
 
 class Inventory:
     """ stores Item objects."""
