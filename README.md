@@ -17,15 +17,15 @@ text-based-adventure-game/
 │  │  └─ data_loader.py      # laddar items.json/world.json och enkla helpers
 │  ├─ systems/
 │  │  ├─ __init__.py
-│  │  ├─ movement.py         # enkel room→room förflyttning
-│  │  └─ combat.py           # enkel strid + colorama-färg
+│  │  ├─ movement.py         #  room→room förflyttning
+│  │  └─ combat.py           #  strid + colorama-färg
 │  └─ entities/
 │     ├─ __init__.py         # exporterar Enemy + factories (create_skeleton/dragon) m.m.
-│     ├─ items.py            # Item (name, kind, value, description)
-│     ├─ inventory.py        # Inventory (om ni vill visa senare)
+│     ├─ items.py            # Item 
+│     ├─ inventory.py        # Inventory 
 │     ├─ enemy.py            # Enemy + create_skeleton/create_dragon
 │     ├─ npc.py              # minimal NPC (talk)
-│     └─ player.py           # Player (behövs inte i spel-loopen just nu, men bra att ha)
+│     └─ player.py           # Player 
 ├─ data/
 │  ├─ items.json             # föremål + vilka rum som har loot
 │  └─ world.json             # namn + beskrivning + connections
