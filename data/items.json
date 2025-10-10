@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "name": "Sword",
+      "kind": "weapon",
+      "value": 10,
+      "description": "A simple steel sword. Increases your damage."
+    },
+    {
+      "name": "Bow",
+      "kind": "weapon",
+      "value": 10,
+      "description": "A basic bow. Attack from a distance."
+    },
+    {
+      "name": "Shield",
+      "kind": "armor",
+      "value": 8,
+      "description": "Sturdy shield. Reduces incoming damage."
+    },
+    {
+      "name": "Armor",
+      "kind": "armor",
+      "value": 20,
+      "description": "Body armor. Reduces incoming damage."
+    },
+    {
+      "name": "Battle Axe",
+      "kind": "weapon",
+      "value": 15,
+      "description": "Heavy axe. Strong close-combat damage."
+    },
+    {
+      "name": "Health Potion",
+      "kind": "consumable",
+      "value": 5,
+      "description": "Restores some HP when used."
+    },
+    {
+      "name": "Key",
+      "kind": "key",
+      "value": 0,
+      "description": "Opens a locked door somewhere."
+    },
+    {
+      "name": "Invisibility Cloak",
+      "kind": "special",
+      "value": 30,
+      "description": "Skip one fight. Does not fool the dragon."
+    }
+  ],
+  "rooms": {
+  "Big armory": ["Sword", "Shield"],
+  "Small armory": ["Bow"],
+  "Laboratory": ["Health Potion"]
+}
+}

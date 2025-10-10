@@ -1,0 +1,39 @@
+{
+  "locations": [
+    {
+      "name": "Corridor",
+      "description": "A dark stone corridor where you wake up.",
+      "exits": ["Laboratory", "Big armory", "Prison"]
+    },
+    {
+      "name": "Cemetery",
+      "description": "Old graves and cold air. Something rattles in the dark.",
+      "exits": ["Dragon's Lair", "Prison"]
+    },
+    {
+      "name": "Dragon's Lair",
+      "description": "Heat and ash; an ancient dragon waits among bones.",
+      "exits": ["Cemetery"]
+    },
+    {
+      "name": "Big armory",
+      "description": "Dusty racks and a merchant. Stronger gear might be here.",
+      "exits": ["Corridor", "Prison"]
+    },
+    {
+      "name": "Small armory",
+      "description": "A small weapons room. Quieter, but still useful.",
+      "exits": ["Prison"]
+    },
+    {
+      "name": "Prison",
+      "description": "Rusty bars and a wounded prisoner whispering for help.",
+      "exits": ["Corridor", "Big armory", "Laboratory", "Small armory", "Cemetery"]
+    },
+    {
+      "name": "Laboratory",
+      "description": "The wizard's lab; bottles and strange notes cover the desk.",
+      "exits": ["Corridor", "Big armory", "Prison"]
+    }
+  ]
+}
