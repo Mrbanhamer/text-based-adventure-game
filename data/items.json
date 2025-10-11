@@ -47,14 +47,17 @@
       "kind": "special",
       "value": 30,
       "description": "Skip one fight. Does not fool the dragon."
+    },
+    {
+      "name": "Dagger",
+      "kind": "weapon",
+      "value": 3,
+      "description": "A small but quick blade."
     }
   ],
   "rooms": {
-    "Big armory": [
-      "Sword",
-      "Shield"
-    ],
-    "Small armory": ["Bow"],
+    "Big armory": ["Shield","Battle Axe", "sword", "Armor"],
+    "Small armory": ["Bow", "Dagger"],
     "Laboratory": [
       "Health Potion"
     ]
