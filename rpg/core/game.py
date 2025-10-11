@@ -25,6 +25,7 @@ bag: list[str] = []
 
 def run_game() -> None:
     print(Fore.CYAN +"=== Dungeon Escape ===", flush=True)
+    print(Fore.YELLOW + "---*** Welcome Hero ***---")
     """
      main loop:
       - Shows context actions depending on the current room
