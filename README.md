@@ -5,31 +5,33 @@
 Struktur:
 
 text-based-adventure-game/
-├─ run.py                     # startar spelet
-├─ requirements.txt           # colorama
+├─ run.py                         # startar spelet
+├─ requirements.txt               # colorama, pytest (om du lagt till)
 ├─ README.md
 ├─ rpg/
 │  ├─ __init__.py
 │  ├─ core/
 │  │  ├─ __init__.py
-│  │  ├─ game.py             # huvud-loopen (move, pickup, inventory, fight, talk)
-│  │  ├─ world.py            # Room-grafen (Corridor, Cemetery, etc.)
-│  │  └─ data_loader.py      # laddar items.json/world.json och enkla helpers
+│  │  ├─ game.py                 # huvud-loopen (move, pickup, inventory, fight, talk)
+│  │  ├─ world.py                # Room-grafen (Corridor, Cemetery, etc.)
+│  │  └─ data_loader.py          # laddar items.json/world.json och enkla helpers
 │  ├─ systems/
 │  │  ├─ __init__.py
-│  │  ├─ movement.py         #  room→room förflyttning
-│  │  └─ combat.py           #  strid + colorama-färg
+│  │  ├─ movement.py             # room→room förflyttning
+│  │  └─ combat.py               # strid + colorama-färg
 │  └─ entities/
-│     ├─ __init__.py         # exporterar Enemy + factories (create_skeleton/dragon) m.m.
-│     ├─ items.py            # Item 
-│     ├─ inventory.py        # Inventory 
-│     ├─ enemy.py            # Enemy + create_skeleton/create_dragon
-│     ├─ npc.py              # minimal NPC (talk)
-│     └─ player.py           # Player 
+│     ├─ __init__.py             # exporterar Enemy + factories m.m.
+│     ├─ items.py                # Item
+│     ├─ inventory.py            # Inventory
+│     ├─ enemy.py                # Enemy + create_skeleton/create_dragon
+│     ├─ npc.py                  # minimal NPC (talk)
+│     └─ player.py               # Player
 ├─ data/
-│  ├─ items.json             # föremål + vilka rum som har loot
-│  └─ world.json             # namn + beskrivning + connections
-└─ .gitignore                #  Python-cache m.m.
+│  ├─ items.json                 # föremål + vilka rum som har loot
+│  └─ world.json                 # namn + beskrivning + connections
+├─ tests/
+│  └─ test_combat_dragon.py      # PyTest: drak-regeln 
+└─ .gitignore                    # Python-cache m.m.
 
 ----------------------------------------------------------------------------------------------------
 Flowchart:
