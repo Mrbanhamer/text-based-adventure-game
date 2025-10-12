@@ -126,7 +126,7 @@ feature-utils – Even
 Mahtab:
 
 Ansvarade för GitHub-strukturen, skapandet av branches och projektets mappstruktur.
-Arbetade huvudsakligen med filerna player, enemy, combat och data_loader, samt hanterade felsökning och körning av projektet.
+Arbetade huvudsakligen med filerna player, enemy, game, combat och data_loader, samt hanterade felsökning och körning av projektet.
 
 Leonard:
 
@@ -146,6 +146,10 @@ Arbetade med JSON-filerna och data_loader, samt deltog i planeringen och anpassn
 ---Samtliga gruppmedlemmar deltog i arbetet med README-filen och samarbetade aktivt med felsökning och stöd i GitHub-miljön under hela projektets gång.
 
 -------------------------------------------------------------------
+
+Vårt spel är byggt som en MVP (“Minimum Viable Product”) – en enkel, körbar version som visar våra viktigaste idéer: rörelse mellan rum, strid, och hantering av föremål. Det fungerar som en grund som vi kan bygga vidare på i framtiden.
+
+---------------------------------------------------------------------
 
 
 

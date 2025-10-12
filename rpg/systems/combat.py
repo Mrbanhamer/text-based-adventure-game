@@ -7,8 +7,8 @@ from rpg.entities import create_skeleton, create_dragon  # enemy factories
 
 def _player_damage(bag: list[str]) -> int:
     """
-    Compute a tiny player damage number from picked items (strings).
-    Rules (very simple):
+    Compute a player damage number from picked items (strings).
+    Rules:
       base = 2
       +1 if "Sword"
       +1 if "Bow"
