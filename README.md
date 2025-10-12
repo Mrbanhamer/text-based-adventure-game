@@ -100,6 +100,8 @@ source .venv/Scripts/activate
 
 # installera beroenden
 python -m pip install -r requirements.txt
+pip install pytest
+
 
 
 Kör spelet:
