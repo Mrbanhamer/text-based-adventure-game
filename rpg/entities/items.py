@@ -1,7 +1,7 @@
 class Item:
     def __init__(self, name:str, item_type: str, value: int = 0, description: str = ""):
         self.name = name #ex name of item type, "Sword", "Shield", "Helm".
-        self.item_type = item_type #type of item, "Weapon", "Armour".
+        self.item_type = item_type #type of item, "Weapon", "Armor".
         self.value = value #ex cost of item bought in currency "5 gold"
         self.description = description #Description of the item, tooltip.
 
