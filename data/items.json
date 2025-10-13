@@ -56,8 +56,15 @@
     }
   ],
   "rooms": {
-    "Big armory": ["Shield","Battle Axe", "sword", "Armor"],
-    "Small armory": ["Bow", "Dagger"],
+    "Big armory": [
+      "Battle Axe",
+      "sword",
+      "Armor"
+    ],
+    "Small armory": [
+      "Bow",
+      "Dagger"
+    ],
     "Laboratory": [
       "Health Potion"
     ]
